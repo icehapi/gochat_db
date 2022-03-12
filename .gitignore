@@ -1,0 +1,2 @@
+*.proto
+conf/prod.toml
