@@ -1,14 +1,16 @@
 package main
 
 import (
-	"net"
-	"log"
-	"google.golang.org/grpc"
+	"gochat_db/internal/server"
 	pb "gochat_db/proto"
-	"gochat_db/server"
+	"log"
+	"net"
+
+	"google.golang.org/grpc"
 )
 
 func main() {
+
 	listener, err := net.Listen("tcp", ":8088")
 	if err != nil {
 		log.Fatalf("net.listen err: %v", err)
@@ -16,9 +18,9 @@ func main() {
 	log.Println("net listen...")
 	grpcServer := grpc.NewServer()
 
-	pb.RegisterGochatByRpcDBServer(grpcServer, &server.GochatByRpcDBServer{})
+	pb.RegisterGochatDBServer(grpcServer, &server.GochatByRpcDBServer{})
 
-	if err = grpcServer.Serve(listener);err != nil {
+	if err = grpcServer.Serve(listener); err != nil {
 		log.Fatalf("grpc server err: %v", err)
 	}
 }
